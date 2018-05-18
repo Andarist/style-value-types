@@ -12,10 +12,11 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "postbuild": "babel $npm_package_module --out-file $npm_package_module --no-babelrc --plugins annotate-pure-calls",
     "watch": "rollup -c -w",
     "lint": "tslint -c tslint.json 'src/**/*.{ts}'",
     "test": "jest",
-    "measure": "gzip -c dist/style-value-types.min.js | wc -c",
+    "measure": "uglifyjs $npm_package_main -cm --toplevel | gzip -c | wc -c",
     "prepublishOnly": "npm run lint && npm run build"
   },
   "repository": {
@@ -36,11 +37,16 @@
   },
   "homepage": "https://github.com/Popmotion/style-value-types#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-annotate-pure-calls": "^0.2.2",
     "jest": "^20.0.4",
+    "rollup": "^0.59.1",
     "rollup-plugin-typescript2": "^0.14.0",
     "rollup-plugin-uglify": "^3.0.0",
     "ts-jest": "^20.0.10",
     "typescript": "^2.4.2",
+    "uglify-js": "^3.3.25",
     "webpack": "^3.0.0"
   },
   "jest": {
@@ -58,5 +64,8 @@
   "prettier": {
     "parser": "typescript",
     "singleQuote": true
+  },
+  "dependencies": {
+    "tslib": "^1.9.1"
   }
 }
